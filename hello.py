@@ -1,34 +1,42 @@
-# A very simple Flask Hello World app for you to get started with...
-from flask import Flask, request, redirect, abort, jsonify
+from flask import Flask, request
+
 app = Flask(__name__)
 
 @app.route('/')
-def hello_world():
-    return '<h1> Hello, World!</h1>'
+def home():
+    return '''
+    <h1><b>Avaliação contínua: Aula 030</b></h1>
+    <ul>
+        <li><a href="/"><b>Home</b></a></li>
+        <li><a href="/user/Caique%20Salmaso/PT3026663/IFSP"><b>Identificação</b></a></li>
+        <li><a href="/contextorequisicao"><b>Contexto de Requisição</b></a></li>
+    </ul>
+    '''
 
-
-@app.route('/user/<name>')
-def user(name):
-    return '<h1> Hello, {}</h1>'.format(name)
+@app.route('/user/<nome>/<prontuario>/<instituicao>')
+def identificacao(nome, prontuario, instituicao):
+    return f'''
+    <h1><b>Avaliação contínua: Aula 030</b></h1>
+    <h2><b>Aluno:</b> {nome}</h2>
+    <h2><b>Prontuário:</b> {prontuario}</h2>
+    <h2><b>Instituição:</b> {instituicao}</h2>
+    <br>
+    <a href="/"><b>Voltar</b></a>
+    '''
 
 @app.route('/contextorequisicao')
-def contexto_requisicao():
+def contextorequisicao():
     user_agent = request.headers.get('User-Agent')
-    return '<p>Your browser is {}</p>'.format(user_agent)
+    remote_ip = request.remote_addr
+    host = request.host
+    return f'''
+    <h1><b>Avaliação contínua: Aula 030</b></h1>
+    <h2><b>Seu navegador é:</b> {user_agent}</h2>
+    <h2><b>O IP do computador remoto é:</b> {remote_ip}</h2>
+    <h2><b>O host da aplicação é:</b> {host}</h2>
+    <br>
+    <a href="/"><b>Voltar</b></a>
+    '''
 
-@app.route('/codigostatusdiferente')
-def codigo_status_diferente():
-    return "Bad Request", 400
-
-@app.route('/objetoresposta')
-def objeto_resposta():
-    return "<h1>This document carries a cookie!</h1>", 200, {'Set-Cookie': 'cookie_name=cookie_value'}
-
-@app.route('/redirecionamento')
-def redirecionamento():
-    return redirect("https://ptb.ifsp.edu.br/")
-
-@app.route('/abortar')
-def abortar():
-    abort(404)
-
+if __name__ == '__main__':
+    app.run(debug=True)
