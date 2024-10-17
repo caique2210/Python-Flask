@@ -1,42 +1,29 @@
-from flask import Flask, request
+from flask import Flask, render_template
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
+# Função para ajustar o horário de Brasília
+def get_brasilia_time():
+    now_utc = datetime.utcnow()  # Hora UTC
+    brasilia_time = now_utc - timedelta(hours=3)  # Ajuste de 3 horas para o horário de Brasília
+    return brasilia_time.strftime("%B %d, %Y %I:%M %p")
+
+# Rota principal
 @app.route('/')
 def home():
-    return '''
-    <h1><b>Avaliação contínua: Aula 030</b></h1>
-    <ul>
-        <li><a href="/"><b>Home</b></a></li>
-        <li><a href="/user/Caique%20Salmaso/PT3026663/IFSP"><b>Identificação</b></a></li>
-        <li><a href="/contextorequisicao"><b>Contexto de Requisição</b></a></li>
-    </ul>
-    '''
+    formatted_time = get_brasilia_time()
+    return render_template('index.html', time=formatted_time)
 
-@app.route('/user/<nome>/<prontuario>/<instituicao>')
-def identificacao(nome, prontuario, instituicao):
-    return f'''
-    <h1><b>Avaliação contínua: Aula 030</b></h1>
-    <h2><b>Aluno:</b> {nome}</h2>
-    <h2><b>Prontuário:</b> {prontuario}</h2>
-    <h2><b>Instituição:</b> {instituicao}</h2>
-    <br>
-    <a href="/"><b>Voltar</b></a>
-    '''
+# Rota de usuário sem Hello World
+@app.route('/user/<name>')
+def user(name):
+    return render_template('index.html', user=name)
 
-@app.route('/contextorequisicao')
-def contextorequisicao():
-    user_agent = request.headers.get('User-Agent')
-    remote_ip = request.remote_addr
-    host = request.host
-    return f'''
-    <h1><b>Avaliação contínua: Aula 030</b></h1>
-    <h2><b>Seu navegador é:</b> {user_agent}</h2>
-    <h2><b>O IP do computador remoto é:</b> {remote_ip}</h2>
-    <h2><b>O host da aplicação é:</b> {host}</h2>
-    <br>
-    <a href="/"><b>Voltar</b></a>
-    '''
+# Rota não encontrada sem Hello World
+@app.route('/rotainexistente')
+def not_found():
+    return render_template('index.html', error=True)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
