@@ -1,11 +1,11 @@
+/* Estilos para a barra de navegação */
 .navbar {
-    background-color: #333; /* Preto mais fraco */
+    background-color: #333; /* Preto suave */
     color: white;
-    padding: 10px 10%; /* Espaço lateral de 10% para alinhar com o conteúdo */
+    padding: 15px 10%;
     display: flex;
-    justify-content: flex-start;
     align-items: center;
-    border-radius: 15px;
+    border-radius: 10px;
     width: 100%;
 }
 
@@ -23,29 +23,51 @@
 .navbar ul li a {
     color: white;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 1.1em;
 }
 
+/* Estilos para o conteúdo */
 .content {
-    margin-left: 10%; /* Mantendo o conteúdo alinhado com a faixa */
+    margin: 0 10%;
     text-align: left;
 }
 
 .content h1 {
-    font-size: 2.5em;
-}
-
-.content h2 {
     font-size: 2em;
-}
-
-.content hr {
-    border: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1); /* Linha quase transparente */
-    width: 100%;
+    margin-top: 1em;
 }
 
 .content p {
     font-size: 1.2em;
+    line-height: 1.6;
+}
+
+form {
+    margin-top: 1.5em;
+}
+
+form label {
+    font-weight: bold;
+    font-size: 1em;
+}
+
+form input[type="text"], form select {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+button {
+    font-size: 1.2em;
+    padding: 10px 20px;
+    margin-top: 1em;
+}
+
+.datetime {
+    margin-top: 2em;
+    font-size: 0.9em;
+    color: #555;
 }
 
